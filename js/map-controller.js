@@ -12,7 +12,9 @@ var marker;
 var txtAddress;
 var txtAddressConfirm;
 var map;
+
 var btnHail;
+var btnHailConfirm;
 
 var currentLocation;
 
@@ -57,6 +59,10 @@ function initialize(){
 	btnHail = $('#btnHail');
 	btnHail.click(onHail);
 
+	// init hail confirm button
+	btnHailConfirm = $('#btnHailConfirm');
+	btnHailConfirm.click(onHailConfirm);
+
 	// init map
 	mapOptions = {
 		zoom : 15,
@@ -79,8 +85,12 @@ function initialize(){
 }
 
 function onHail(){
-	// TODO pedir el taxi
 	txtAddressConfirm.html('\"'+txtAddress.val()+'\"');
+}
+
+function onHailConfirm(){
+	//TODO pedir el taxi
+	$.mobile.changePage( "#loading-page",{ transition: "flip"});
 }
 
 function onLocationUpdated(position){
