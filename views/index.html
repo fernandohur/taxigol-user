@@ -54,7 +54,7 @@
 				<div data-role="navbar" class="navbar">
 					<ul>
 						<li>
-							<a id="btnHail" data-theme="e" data-rel="dialog" href="#loading-page">
+							<a id="btnHail" data-theme="e" data-rel="dialog" href="#confirm-address-dialog">
 								<i class="icon-phone"></i> Pedir Taxi
 							</a>
 						</li>
@@ -68,12 +68,15 @@
 		<!-- -->
 		<div data-role="page" id="confirm-address-dialog" data-theme="b">
 			<div data-role="header" data-theme="e">
-				<h1> Confirmar direcci&oacute; </h1>
+				<h1> Confirmar direcci&oacute;n </h1>
 			</div>
 			<div data-role="content" data-theme="b">
 				<p>
 					Est&aacute;s seguro que quieres
-					pedir un taxi de la direcci&oacute;n <b>XXX</b>
+					pedir un taxi de la direcci&oacute;n
+				</p>
+				<p>
+					<b id="txtAddressConfirm">XXX</b>
 				</p>
 
 			</div>

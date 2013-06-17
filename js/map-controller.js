@@ -10,6 +10,7 @@ var marker;
 
 // widgets
 var txtAddress;
+var txtAddressConfirm;
 var map;
 var btnHail;
 
@@ -45,6 +46,8 @@ function initialize(){
 
 	// init text address field
 	txtAddress = $('#txtAddress');
+	txtAddressConfirm = $('#txtAddressConfirm');
+
 	var savedAddress = loadGeocoderResult();
 	if (savedAddress){
 		txtAddress.val(savedAddress);
@@ -77,7 +80,7 @@ function initialize(){
 
 function onHail(){
 	// TODO pedir el taxi
-	console.log('button clicked');
+	txtAddressConfirm.html('\"'+txtAddress.val()+'\"');
 }
 
 function onLocationUpdated(position){
