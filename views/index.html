@@ -6,14 +6,15 @@
 	<title>Taxigol</title>
 
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css">
-	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.0/css/font-awesome.css" rel="stylesheet">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.0/css/font-awesome.css">
+	<link rel="stylesheet" href="../css/common.css">
 
-	<script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+	<script src="http://code.jquery.com/jquery-1.7.0.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
-
+	<script src="http://maps.google.com/maps/api/js?v=3&sensor=true" type="text/javascript"></script>
 	<!--script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script-->
 
-	<link href="../css/common.css" rel="stylesheet">
+
 </head>
 	<body>
 
@@ -50,26 +51,24 @@
 			<div data-role="header" data-theme="e">
 				<input type="search" name="search" id="txtAddress" value="tu direcci&oacute;n" />
 			</div>
-			<div id="map-canvas" data-role="content" data-theme="b">
+			<div id="map-container" data-role="content" data-theme="b">
+				<div id="map-canvas"></div>
 
 			</div>
 
-			<div data-role="footer" data-position="fixed" data-theme="a">
-				<div data-role="navbar" class="navbar">
-					<ul>
-						<li>
-							<a id="btnHail" data-theme="e" data-rel="dialog" href="#confirm-address-dialog">
-								<i class="icon-phone"></i> Pedir Taxi
-							</a>
-						</li>
-					</ul>
-				</div>
+			<div data-role="footer" data-position="fixed" data-theme="a" style="height: 0px; border: 0">
+				<a id="btnHail" data-theme="e" data-rel="dialog" href="#confirm-address-dialog">
+					<i class="icon-phone"></i> Pedir Taxi
+				</a>
 			</div>
 
 		</div>
 		<!-- END map-page -->
 
-		<!-- -->
+		<!--
+			@Dialog: Confirm address dialog
+			@Description: this dialog simple asks the user to confirm that the address is correct
+		 -->
 		<div data-role="page" id="confirm-address-dialog" data-theme="b">
 			<div data-role="header" data-theme="e">
 				<h1> Confirmar direcci&oacute;n </h1>
@@ -87,7 +86,7 @@
 				</button>
 			</div>
 			<div data-role="footer" data-position="fixed" data-theme="a">
-
+				<p>Taxigol</p>
 			</div>
 
 		</div>
@@ -102,15 +101,24 @@
 				<h1> Confirmando </h1>
 			</div>
 			<div data-role="content" data-theme="b">
-				<p>Tu servicio llegar&aacute; pronto</p>
-
+				<p>Tu taxi llegar&aacute; pronto</p>
+				<div id ="loadingIndicator"></div>
 			</div>
 			<div data-role="footer" data-position="fixed" data-theme="e">
-				<h1> </h1>
+				<div data-role="navbar">
+					<ul>
+						<li>
+							<a id="btnCancelTaxi">
+								<i class="icon-remove-sign" ></i> Cancelar taxi
+							</a>
+						</li>
+					</ul>
+				</div>
 			</div>
-
 		</div>
 		<!-- -->
+
+
 
 		<!--
 			@Page: Servicio Confirmado
@@ -128,13 +136,17 @@
 				<p></p>
 				<p> Celular del conductor: </p>
 				<p></p>
-				<p><i class="icon-smile"></i> Tu servicio llegar&aacute; pronto</p>
+				<p><i class="icon-smile"></i> Tu taxi llegar&aacute; pronto</p>
 
 			</div>
 			<div data-role="footer" data-position="fixed" data-theme="e">
 				<div data-role="navbar">
 					<ul>
-						<li><button id="btnFollowTaxi"><i class="icon-search"></i> Ver Taxi</button></li>
+						<li>
+							<a id="btnFollowTaxi" href="#follow-page" data-transition="flip">
+								<i class="icon-search"></i> Ver Taxi
+							</a>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -142,17 +154,70 @@
 		</div>
 		<!-- -->
 
+		<!--
+			@Page: Follow driver page
+			@Description:
+		-->
+		<div data-role="page" id="follow-page" data-theme="b">
+			<div data-role="header" data-theme="e">
+				<h1><i class="icon-rocket"></i> Taxi confirmado </h1>
+			</div>
+			<div data-role="content" data-theme="b">
+				<div id="map-canvas2"></div>
+			</div>
+			<div data-role="footer" data-position="fixed" data-theme="e">
+				<div data-role="navbar">
+					<ul>
+						<li>
+							<a href="#map-page" data-transition="flip">
+								<i class="icon-search"></i> Cancelar taxi
+							</a>
+						</li>
+						<li>
+							<a href="#map-page" data-transition="flip">
+								<i class="icon-search"></i> Ver Taxi
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
 
+		</div>
+		<!-- -->
 
-		<script type="text/javascript">
-
-
-		</script>
-		<script type="text/javascript" src="../js/map-controller.js"></script>
-		<script type="text/javascript" src="../js/helpers/location-helper.js"></script>
 		<script type="text/javascript" src="../js/models/model-location.js"></script>
-
-		<script type="text/javascript" src="../js/user-controller.js"></script>
 		<script type="text/javascript" src="../js/models/model-user.js"></script>
+		<script type="text/javascript" src="../js/models/model-service.js"></script>
+
+		<script type="text/javascript" src="../js/map-controller.js"></script>
+		<script type="text/javascript" src="../js/user-controller.js"></script>
+		<script type="text/javascript" src="../js/follow-controller.js"></script>
+
+		<script type="text/javascript" src="../js/helpers/location-helper.js"></script>
+
+		<script type="text/javascript" src="../js/widgets/spin.min.js"></script>
+		<script type="text/javascript">
+				var opts = {
+					lines: 13, // The number of lines to draw
+					length: 50, // The length of each line
+					width: 9, // The line thickness
+					radius: 37, // The radius of the inner circle
+					corners: 1, // Corner roundness (0..1)
+					rotate: 0, // The rotation offset
+					direction: 1, // 1: clockwise, -1: counterclockwise
+					color: '#fadb4e', // #rgb or #rrggbb
+					speed: 1.5, // Rounds per second
+					trail: 100, // Afterglow percentage
+					shadow: true, // Whether to render a shadow
+					hwaccel: true, // Whether to use hardware acceleration
+					className: 'spinner', // The CSS class to assign to the spinner
+					zIndex: 2e9, // The z-index (defaults to 2000000000)
+					top: 'auto', // Top position relative to parent in px
+					left: 'auto' // Left position relative to parent in px
+				};
+				var target = document.getElementById('loadingIndicator');
+				var spinner = new Spinner(opts).spin(target);
+			</script>
+
 	</body>
 </html>

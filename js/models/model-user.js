@@ -12,7 +12,7 @@ function User(name, cel, email){
 
 	User.load = function(){
 		var hash = localStorage.getItem(User.name);
-		return User.build(JSON.load(hash));
+		return User.build(JSON.parse(hash));
 	}
 	User.exists = function(){
 		return localStorage.getItem(User.name);

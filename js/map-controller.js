@@ -1,3 +1,4 @@
+
 // ------------------------------------
 // Declare variables
 // ------------------------------------
@@ -18,19 +19,18 @@ var btnHailConfirm;
 
 var currentLocation;
 
+var firstLoad = true;
 // ------------------------------------
 // Initialization code
 // ------------------------------------
 $(document).ready(function(){
 
-	var s = document.createElement("script");
-	s.type = "text/javascript";
-	s.src  = "http://maps.google.com/maps/api/js?v=3&sensor=true&callback=gmap_draw";
-	window.gmap_draw = function(){
-		initialize();
-	};
-	$("head").append(s);
-
+	$('#map-page').on('pageshow',function(){
+		if (firstLoad){
+			initialize();
+			firstLoad = false;
+		}
+	})
 });
 
 
@@ -43,8 +43,11 @@ $(document).ready(function(){
 
 function initialize(){
 
-	//current locaiton object
-	currentLocation = new Location(0,0,"");
+	//init service's handler
+	Service.onConfirm = function(service){
+		$.mobile.changePage("#success-page",{transition: "flip"});
+		console.log('confirmed');
+	};
 
 	// init text address field
 	txtAddress = $('#txtAddress');
@@ -66,21 +69,24 @@ function initialize(){
 	// init map
 	mapOptions = {
 		zoom : 15,
-		mapTypeId : google.maps.MapTypeId.ROADMAP
+		mapTypeId : google.maps.MapTypeId.ROADMAP,
+		disableDefaultUI: true
 	};
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-	if (Location.exists()){
-		var location = Location.load();
-		map.setCenter(new google.maps.LatLng(location.latitude, location.longitude));
+	var location = null;
+	if (Position.exists()){
+		location = Position.load();
+
 	}
 	else{
-		map.setCenter(new google.maps.LatLng(4.597942,-74.075725));
+		var location = Position.build({lat: 4.597942, lon: -74.075725})
+		location.save();
 	}
+	map.setCenter(new google.maps.LatLng(location.lat, location.lon));
 
 	// init geocoder and geolocation
 	geo = navigator.geolocation;
 	geocoder = new google.maps.Geocoder();
-
 	requestLocation(onLocationUpdated, handleNoGeolocation);
 }
 
@@ -90,11 +96,20 @@ function onHail(){
 
 function onHailConfirm(){
 	//TODO pedir el taxi
-	$.mobile.changePage( "#loading-page",{ transition: "flip"});
+	var location = Position.load();
+	var user = User.load();
+	var service = Service.build({
+		lat: location.lat,
+		lon: location.lon,
+		address: loadGeocoderResult(),
+		userName: user.name,
+		cel: user.cel
+	});
+	service.save();
+	$.mobile.changePage( "#loading-page",{ transition: "flip", reverse:false});
 }
 
 function onLocationUpdated(position){
-
 	var lat = position.coords.latitude;
 	var lon = position.coords.longitude;
 
@@ -122,12 +137,9 @@ function onGeocoderCallback(geocoderResult, geocoderStatus){
 
 
 function handleNoGeolocation(){
-
 	showTooltip('lo sentimos', 'no pudimos encontrar tu ubicaci&oacute;n. Porfavor arrastra el marcador hasta tu ubicaci&oacute;n actual.', 'icon-frown');
-	var location = getSavedLocation();
-	if (location && location.latitude && location.longitude){
-		onLocationUpdated({coords:{latitude:location.latitude, longitude:location.longitude}});
-	}
+	var location  = Position.load();
+	onLocationUpdated({coords:{latitude:location.lat, longitude:location.lon}});
 }
 
 function updateMarker(pos){
@@ -159,7 +171,8 @@ function onMarkerDragEnd(){
 	geocoder.geocode({location:pos}, onGeocoderCallback);
 	txtAddress.focus();
 
-	saveLocation(pos.jb, pos.kb);
+	var location = Position.build({lat: pos.jb, lon: pos.kb});
+	location.save();
 }
 
 
