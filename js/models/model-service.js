@@ -13,6 +13,7 @@ function Service(lat, lon, address, userName, cel){
 	// saves the current Service to localStorage
 	this.save = function(){
 		localStorage.setItem(Service.name, JSON.stringify(this));
+        solici
 		window.setInterval(this.checkState(this),10000);
 	}
 
