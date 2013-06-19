@@ -1,7 +1,7 @@
-var url ="http://agile-crag-3095.herokuapp.com/users.json";
+var userUrl ="http://agile-crag-3095.herokuapp.com/users.json";
 
 function registrarUsuario(nombre, eMail, cel, metodo){
-    $.post(url, {
+    $.post(userUrl, {
            phone_number : cel,
            email : eMail,
            name : nombre

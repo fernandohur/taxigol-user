@@ -40,7 +40,7 @@ function getState(serviceId, metodo, param1) {
           confirmado = true;
           var taxId = data.taxi_id;
           metodo(param1, taxId);
-          //window.sessionStorage.setItem("taxiId", taxId);
+          //window.sessionStorage.setItem("taxiId", taxId); esto lo hace el metodo de arriba. 
           }
           });
     
