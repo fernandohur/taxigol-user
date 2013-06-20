@@ -7,6 +7,7 @@ var driverUrl = "http://arcane-lowlands-6512.herokuapp.com/drivers/";
 function obtenerDatosTaxista(taxiID, metodo){
     var driverId;
     var result[];
+    result.push(taxiID);
     $.get(taxiUrl + taxiId + ".json")
     .done(function(data){
           driverId = data.current_driver_id;

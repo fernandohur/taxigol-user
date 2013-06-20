@@ -21,8 +21,7 @@ function Position(lat, lon){
 	}
 }
 
-Position.lastPosition = function(){
-	var taxiId = sessionStorage.getItem("taxiId");
+Position.lastPosition = function(taxiId){	
 	var res = lastPosition(taxiId);
 	var pos = new Position(res[0], res[1]);
 	return pos;

@@ -1,5 +1,6 @@
-function Driver(placa, name, cel){
+function Driver(taxiId, placa, name, cel){
 
+	this.taxiId = taxiId;
 	this.placa = placa;
 	this.name = name;
 	this.cel = cel;
@@ -21,7 +22,7 @@ function Driver(placa, name, cel){
 	}
 	
 	Driver.build = function(hash){
-		return new Driver(hash.placa, hash.name, hash.cel);
+		return new Driver(hash.taxiId, hash.placa, hash.name, hash.cel);
 	}
 }
 

@@ -44,8 +44,8 @@ $(document).ready(function(){
 function initialize(){
 
 	//init service's handler
-	Service.onConfirm = function(service, driverHash){
-		var driver = Driver.build({placa: driverHash[0], name: driverHash[1], cel: driverHash[2]});
+	Service.onConfirm = function(driverHash){
+		var driver = Driver.build({taxiId: driverHash[0], placa: driverHash[1], name: driverHash[2], cel: driverHash[3]});
 		driver.save();
 		updateDriverLabels();
 		$.mobile.changePage("#success-page",{transition: "flip"});
