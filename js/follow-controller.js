@@ -6,11 +6,12 @@
 var driverMapOptions;
 var driverMarker;
 var userMarker;
+var near;
 
 // widgets
 var driverMap;
 
-var currentLocation;
+var userPos;
 
 var driverFirstLoad = true;
 // ------------------------------------
@@ -40,16 +41,17 @@ function driverInitialize(){
 		disableDefaultUI: true
 	};
 	driverMap = new google.maps.Map(document.getElementById('map-canvas2'), driverMapOptions);
-	var location = null;
+	userPos = null;
 	if (Position.exists()){
-		location = Position.load();
+		userPos = Position.load();
 
 	}
 	map.setCenter(new google.maps.LatLng(location.lat, location.lon));
 	updateMarkers();
+	var near = setInterval(updateDriverMarker(), 2000);
 }
 
-function updateMarkers(pos){
+function updateMarkers(){
 	if (driverMarker==null){
 		driverMarker = new google.maps.Marker(
 			{
@@ -58,6 +60,7 @@ function updateMarkers(pos){
 	        }
 		);
 	}
+	var pos = new google.maps.Latlng(userPos.lat, userPos.lon);
 	if(userMarker == null){
 		userMarker= new google.maps.Marker(
 			{
@@ -75,8 +78,15 @@ function updateDriverMarker(){
 	var pos = Position.lastPosition(driver.taxiId);
 	var gPos = new google.maps.LatLng(pos.lat, pos.lon);
 	driverMarker.setPosition(gPos);
+	computeDistance(gPos);
 }
 
-function computeDistance(){
-	
+function computeDistance(taxiPos){
+    if(taxiPos != null){
+        var distance = google.maps.geometry.spherical.computeDistanceBetween(userPos, taxiPos);
+        if(distance <= 100){
+            clearInterval(near);
+            alert("llego el taxi");
+        }
+    }
 }
