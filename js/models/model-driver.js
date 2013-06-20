@@ -5,11 +5,24 @@ function Driver(placa, name, cel){
 	this.cel = cel;
 	this.location = null;
 	
-	Driver.loadData = function(){
-		var taxiId = window.sessionStorage.getItem("taxiId");
-		var resul = obtenerDatosTaxista(taxiId);
-		this.placa = resul[0];
-		this.name = resul[1];
-		this.cel = resul[2]; 
+	this.save = function(){		
+		localStorage.setItem(Driver.name, JSON.stringify(this));
+	}
+
+	// define class-methods (static methods)
+
+	Driver.load = function(){
+		var hash = localStorage.getItem(Driver.name);
+		return Driver.build(JSON.parse(hash));
+	}
+	
+	Driver.exists = function(){
+		return localStorage.getItem(Driver.name);
+	}
+	
+	Driver.build = function(hash){
+		return new Driver(hash.placa, hash.name, hash.cel);
 	}
 }
+
+new Driver();

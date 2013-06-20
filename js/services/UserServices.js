@@ -10,9 +10,9 @@ function registrarUsuario(nombre, eMail, cel, metodo){
                    })
 }
 
-function exitoso(nombre, eMail, cel){
+/*function exitoso(nombre, eMail, cel){
     window.localStorage.setItem("userId", 1);
     window.localStorage.setItem("nombre", nombre);
     window.localStorage.setItem("email", eMail);
     window.localStorage.setItem("celular", cel);
-}
+}*/

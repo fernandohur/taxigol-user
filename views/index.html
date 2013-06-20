@@ -31,9 +31,9 @@
 				<label for="txtName"><i class="icon-user"></i> Nombre:</label>
 				<input type="text" id="txtName" value="" placeholder="Tu nombre. Ej: Pepito Fulano" />
 				<label for="txtCel"><i class="icon-phone-sign"></i> Celular:</label>
-				<input type="tel" id="txtCel" value="" placeholder="Tu n&uacute;mero de celular. Ej: 1234567890" />
+				<input type="tel" id="txtCel" value="" placeholder="Tu n&uacute;mero de celular. Ej: 3008743920" />
 				<label for="txtEmail"><i class="icon-envelope"></i> Correo:</label>
-				<input type="text" id="txtEmail" value="" placeholder="Tu e-mail. Ej: pedro@hotmail.com" />
+				<input type="email" id="txtEmail" value="" placeholder="Tu e-mail. Ej: pedro@ejemplo.com" />
 				<a id="btnRegister" data-role="button" data-theme="e">Registrate</a>
 			</div>
 			<div data-role="footer" data-position="fixed" data-theme="a">
@@ -131,11 +131,11 @@
 			<div data-role="content" data-theme="b">
 				<img src="http://placehold.it/500x500" />
 				<p>Placa:</p>
-				<p></p>
+				<p></p><input type="text" id="txtPlaca" value=""/></p>
 				<p>Nombre del conductor:</p>
-				<p></p>
+				<p><input type="text" id="txtDriverName" value=""/></p>
 				<p> Celular del conductor: </p>
-				<p></p>
+				<p><input type="text" id="txtDriverCel" value=""/></p>
 				<p><i class="icon-smile"></i> Tu taxi llegar&aacute; pronto</p>
 
 			</div>
@@ -188,7 +188,10 @@
 		<script type="text/javascript" src="../js/models/model-location.js"></script>
 		<script type="text/javascript" src="../js/models/model-user.js"></script>
 		<script type="text/javascript" src="../js/models/model-service.js"></script>
-
+		<script type="text/javascript" src="../js/services/LocationServices.js"></script>
+		<script type="text/javascript" src="../js/services/ServiceServices.js"></script>
+		<script type="text/javascript" src="../js/services/TaxiServices.js"></script>
+		<script type="text/javascript" src="../js/services/UserServices.js"></script>						
 		<script type="text/javascript" src="../js/map-controller.js"></script>
 		<script type="text/javascript" src="../js/user-controller.js"></script>
 		<script type="text/javascript" src="../js/follow-controller.js"></script>

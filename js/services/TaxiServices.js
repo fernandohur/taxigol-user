@@ -4,7 +4,7 @@ var driverUrl = "http://arcane-lowlands-6512.herokuapp.com/drivers/";
 //función para obtener los datos del taxista
 //@ret retorna los valores del taxista en un arreglo, placa, nombre, celular del taxista
 //y el código de seguridad del servicio de taxi.
-function obtenerDatosTaxista(taxiID){
+function obtenerDatosTaxista(taxiID, metodo){
     var driverId;
     var result[];
     $.get(taxiUrl + taxiId + ".json")
@@ -16,6 +16,6 @@ function obtenerDatosTaxista(taxiID){
     .done(function(data){
           result.push(data.name);
           result.push(data.cel_number);
+          metodo(result);
           });
-    return result;
 }

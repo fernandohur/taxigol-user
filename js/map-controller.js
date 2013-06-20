@@ -44,7 +44,10 @@ $(document).ready(function(){
 function initialize(){
 
 	//init service's handler
-	Service.onConfirm = function(service){
+	Service.onConfirm = function(service, driverHash){
+		var driver = Driver.build({placa: driverHash[0], name: driverHash[1], cel: driverHash[2]});
+		driver.save();
+		updateDriverLabels();
 		$.mobile.changePage("#success-page",{transition: "flip"});
 		console.log('confirmed');
 	};
@@ -129,6 +132,9 @@ function onGeocoderCallback(geocoderResult, geocoderStatus){
 		txtAddress.val(address.split(',')[0]);
 		saveGeocoderResult(txtAddress.val());
 	}
+	else if(geocoderStatus == google.maps.GeocoderStatus.OVER_QUERY_LIMIT){
+		txtAddress.val('Por favor ingresa tu direccion');
+	}
 	else{
 		txtAddress.val('Por favor ingresa tu direccion');
 	}
@@ -152,8 +158,9 @@ function updateMarker(pos){
 	            draggable : true
 	        }
 		);
+		onMarkerDragEnd();
 		google.maps.event.addListener(marker, 'dragstart', onMarkerDragStart);
-		google.maps.event.addListener(marker, 'dragend', onMarkerDragEnd);
+		google.maps.event.addListener(marker, 'dragend', setTimeout(onMarkerDragEnd,1000));
 	}
 	else{
 		marker.setPosition(pos);
@@ -171,7 +178,7 @@ function onMarkerDragEnd(){
 	geocoder.geocode({location:pos}, onGeocoderCallback);
 	txtAddress.focus();
 
-	var location = Position.build({lat: pos.jb, lon: pos.kb});
+	var location = Position.build({lat: pos.lat(), lon: pos.lng()});
 	location.save();
 }
 

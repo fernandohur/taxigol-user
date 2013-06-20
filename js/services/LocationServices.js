@@ -1,4 +1,4 @@
-var urlLastPosition = "http://agile-crag-3095.herokuapp.com/positions/get_last";
+var urlLastPosition = "http://arcane-lowlands-6512.herokuapp.com/positions/get_last";
 
 //función que retorna el último método de la posición de un taxista
 //@param taxiId, es el identificador del taxista. 
