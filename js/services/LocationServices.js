@@ -6,7 +6,7 @@ var urlLastPosition = "http://arcane-lowlands-6512.herokuapp.com/positions/get_l
 function lastPosition(taxiId) {
     if(taxiId != null) {
         var lat, lon;
-        var result[];
+        var result = [];
         $.get(urlLastPosition, {taxi_id : taxiId})
         .done(function(data) {
               lat = data.latitude;

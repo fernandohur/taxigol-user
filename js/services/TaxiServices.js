@@ -6,7 +6,7 @@ var driverUrl = "http://arcane-lowlands-6512.herokuapp.com/drivers/";
 //y el código de seguridad del servicio de taxi.
 function obtenerDatosTaxista(taxiID, metodo){
     var driverId;
-    var result[];
+    var result = new Array();
     result.push(taxiID);
     $.get(taxiUrl + taxiId + ".json")
     .done(function(data){

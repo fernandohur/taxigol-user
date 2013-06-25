@@ -68,7 +68,8 @@ function initialize(){
 	// init hail confirm button
 	btnHailConfirm = $('#btnHailConfirm');
 	btnHailConfirm.click(onHailConfirm);
-
+    
+    google.maps.visualRefresh = true;
 	// init map
 	mapOptions = {
 		zoom : 15,
@@ -154,13 +155,15 @@ function updateMarker(pos){
 			{
 	        	position : pos,
 	            map : map,
-	            icon: '../img/map_marker.png',
+	            icon: 'img/map_marker.png',
 	            draggable : true
 	        }
 		);
 		onMarkerDragEnd();
 		google.maps.event.addListener(marker, 'dragstart', onMarkerDragStart);
-		google.maps.event.addListener(marker, 'dragend', setTimeout(onMarkerDragEnd,1000));
+		google.maps.event.addListener(marker, 'dragend', function(){
+                                      setTimeout(onMarkerDragEnd,1000)
+                                      });
 	}
 	else{
 		marker.setPosition(pos);
@@ -187,5 +190,7 @@ function onMarkerDragEnd(){
 function showTooltip(title, message, icon){
 
 }
+
+google.maps.event.addDomListener(window, 'load', initialize());
 
 
