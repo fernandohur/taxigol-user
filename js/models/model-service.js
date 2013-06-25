@@ -1,5 +1,3 @@
-var nameId = "servicio";
-
 function Service(lat, lon, address, userName, cel) {
 
 	this.lat = lat;
@@ -8,9 +6,8 @@ function Service(lat, lon, address, userName, cel) {
 	this.userName = userName;
 	this.cel = cel;
 
-	this.checkState = function(service) {
-		obtenerDatosTaxista(taxiId, Service.onConfirm);		 
-		//Service.onConfirm(resultado);
+	this.checkState = function(taxId) {
+		obtenerDatosTaxista(taxId, Service.onConfirm);
 	};
 
 	// saves the current Service to localStorage
@@ -20,9 +17,7 @@ function Service(lat, lon, address, userName, cel) {
 		if (this.cel != null) {
 			var lastCode = this.cel.substr(cel.length - 2);
 		}
-		solicitarServicio(this.address, lastCode, this.lat, this.lon, this.checkState, this);
-		//esto se agrega en el servicio
-		//window.setInterval(this.checkState(this), 10000);
+		solicitarServicio(this.address, lastCode, this.lat, this.lon, this.checkState);
 	}
 	// loads a Service from local storage
 	Service.load = function() {

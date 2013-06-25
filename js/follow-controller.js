@@ -19,7 +19,7 @@ var driverFirstLoad = true;
 // ------------------------------------
 $(document).ready(function(){
 
-	$('#map-page').on('pageshow',function(){
+	$('#follow-page').on('pageshow',function(){
 		if (driverFirstLoad){
 			driverInitialize();
 			driverFirstLoad = false;
@@ -46,27 +46,28 @@ function driverInitialize(){
 		userPos = Position.load();
 
 	}
-	map.setCenter(new google.maps.LatLng(location.lat, location.lon));
+	driverMap.setCenter(new google.maps.LatLng(userPos.lat, userPos.lon));
 	updateMarkers();
-	var near = setInterval(updateDriverMarker(), 2000);
+	near = setInterval(updateDriverMarker(), 2000);
 }
 
 function updateMarkers(){
 	if (driverMarker==null){
 		driverMarker = new google.maps.Marker(
 			{
-	            map : map,
-	            icon: '../img/taxi-icon.png',	         
+	            map : driverMap,
+	            icon: 'img/taxi-icon.png',	         
 	        }
 		);
 	}
-	var pos = new google.maps.Latlng(userPos.lat, userPos.lon);
+    //TODO
+	var pos = new google.maps.LatLng(userPos.lat, userPos.lon);
 	if(userMarker == null){
 		userMarker= new google.maps.Marker(
 			{
 				position: pos,
-				map:map,
-				icon: '../img/map_marker.png'
+				map:driverMap,
+				icon: 'img/map_marker.png'
 			}
 		)
 		
@@ -74,7 +75,10 @@ function updateMarkers(){
 }
 
 function updateDriverMarker(){
-	var driver = Driver.load();
+    var driver=null;
+    if(Driver.exists()){
+        driver = Driver.load();
+    }
 	var pos = Position.lastPosition(driver.taxiId);
 	var gPos = new google.maps.LatLng(pos.lat, pos.lon);
 	driverMarker.setPosition(gPos);

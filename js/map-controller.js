@@ -27,7 +27,7 @@ $(document).ready(function(){
 
 	$('#map-page').on('pageshow',function(){
 		if (firstLoad){
-			initialize();
+            document.addEventListener("deviceready", initialize, false);
 			firstLoad = false;
 		}
 	})
@@ -49,7 +49,6 @@ function initialize(){
 		driver.save();
 		updateDriverLabels();
 		$.mobile.changePage("#success-page",{transition: "flip"});
-		console.log('confirmed');
 	};
 
 	// init text address field
@@ -68,8 +67,7 @@ function initialize(){
 	// init hail confirm button
 	btnHailConfirm = $('#btnHailConfirm');
 	btnHailConfirm.click(onHailConfirm);
-    
-    google.maps.visualRefresh = true;
+
 	// init map
 	mapOptions = {
 		zoom : 15,
@@ -102,10 +100,12 @@ function onHailConfirm(){
 	//TODO pedir el taxi
 	var location = Position.load();
 	var user = User.load();
+    var dire = txtAddress.val();
+    saveGeocoderResult(dire);
 	var service = Service.build({
 		lat: location.lat,
 		lon: location.lon,
-		address: loadGeocoderResult(),
+		address: dire,
 		userName: user.name,
 		cel: user.cel
 	});
@@ -190,7 +190,5 @@ function onMarkerDragEnd(){
 function showTooltip(title, message, icon){
 
 }
-
-google.maps.event.addDomListener(window, 'load', initialize());
 
 
